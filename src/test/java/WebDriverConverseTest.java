@@ -13,6 +13,12 @@ public class WebDriverConverseTest {
     WebDriver driver;
 
     @BeforeTest
+    public void BrowserSetup(){
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
+
+    @Test
     public void AddProductToFavoriteTest(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -53,25 +59,11 @@ public class WebDriverConverseTest {
         goToFavoritesButton.click();
         new WebDriverWait(driver,20).until(ExpectedConditions.presenceOfElementLocated(By
                .xpath("//div[@class='account-head__title flex flex-align-center']")));
-    }
 
-    @Test
-    public void CheckNameTest(){
         Assert.assertEquals( "Chuck Taylor All Star", driver.findElement(By
                 .xpath("//a[@class='product-tile__url link--underline']")).getText());
     }
-
-    @Test
-    public void CheckPriceTest(){
-        Assert.assertEquals("$55.00", driver.findElement(By
-                .xpath("//span[@class='product-price--sales']")).getText());
-    }
-
-    @Test
-    public void CheckImageTest(){
-        Assert.assertEquals("https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dw12233c7f/images/e_08/M9160_E_08X1.jpg?sw=406",
-                driver.findElement(By .xpath("//picture[@class='product-tile__img ratio-media ratio-media--fit product-tile__img--main--picture-element']/img")).getAttribute("src"));
-    }
+    
 
     @AfterTest
     public void TearDown(){
