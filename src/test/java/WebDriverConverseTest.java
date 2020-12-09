@@ -8,12 +8,21 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 
 public class WebDriverConverseTest {
     WebDriver driver;
+    private static ChromeDriverService service;
 
-    @BeforeTest
-    public void BrowserSetup(){
+    @BeforeTest(alwaysRun = true)
+    public void BrowserSetup() throws IOException {
+        System.setProperty("webdriver.chrome.driver","H:\\3\\5\\epam\\chromedriver.exe");
+        service = new ChromeDriverService.Builder()
+                .usingDriverExecutable(new File("H:\\3\\5\\epam\\chromedriver.exe"))
+                .usingAnyFreePort()
+                .build();
+        service.start();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
@@ -75,5 +84,6 @@ public class WebDriverConverseTest {
     @AfterTest
     public void TearDown(){
         driver.quit();
+        driver=null;
     }
 }
